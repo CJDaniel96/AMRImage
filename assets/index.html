@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>下載檔案</title>
+    <link rel="stylesheet" type="text/css" href="assets/bootstrap.min.css" />
+    <style>
+      body {
+        background-color: #f8f9fa;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header
+        class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom"
+      >
+        <a
+          href="/"
+          class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none"
+        >
+          <svg class="bi me-2" width="40" height="32">
+            <image
+              xlink:href="/assets/usi_logo_white.png"
+              width="40"
+              height="32"
+            />
+          </svg>
+          <span class="fs-4" data-relingo-block="true" data-relin-paragraph="1"
+            >AMR Image Data Center</span
+          >
+        </a>
+
+        <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+          <li class="nav-item" role="presentation">
+            <button
+              class="nav-link"
+              id="pills-download-tab"
+              data-bs-toggle="pill"
+              data-bs-target="#pills-download"
+              type="button"
+              role="tab"
+              aria-controls="pills-download"
+              aria-selected="true"
+            >
+              Download
+            </button>
+          </li>
+
+          <li class="nav-item" role="presentation">
+            <button
+              class="nav-link disabled"
+              id="pills-upload-csv-for-download-tab"
+              data-bs-toggle="pill"
+              data-bs-target="#pills-upload-csv-for-download"
+              type="button"
+              role="tab"
+              aria-controls="pills-upload-csv-for-download"
+              aria-selected="true"
+            >
+              Upload CSV for Download
+            </button>
+          </li>
+
+          <li class="nav-item" role="presentation">
+            <button
+              class="nav-link active"
+              id="pills-show-images-tab"
+              data-bs-toggle="pill"
+              data-bs-target="#pills-show-images"
+              type="button"
+              role="tab"
+              aria-controls="pills-show-images"
+              aria-selected="false"
+            >
+              Show Images
+            </button>
+          </li>
+
+          <li class="nav-item" role="presentation">
+            <button
+              class="nav-link"
+              id="pills-produce-report-tab"
+              data-bs-toggle="pill"
+              data-bs-target="#pills-produce-report"
+              type="button"
+              role="tab"
+              aria-controls="pills-produce-report"
+              aria-selected="false"
+            >
+              Produce Report
+            </button>
+          </li>
+        </ul>
+      </header>
+    </div>
+
+    <main class="flex-shrink-0">
+      <div class="tab-content" id="pills-tabContent">
+        <div
+          class="tab-pane fade"
+          id="pills-download"
+          role="tabpanel"
+          aria-labelledby="pills-download-tab"
+        >
+          <div class="row justify-content-center">
+            <div class="col-md-4">
+              <div class="card shadow">
+                <div class="card-body d-flex flex-column align-items-center">
+                  <h4
+                    class="card-title mb-5"
+                    data-relingo-block="true"
+                    data-relin-paragraph="2"
+                  >
+                    Donwload AMR Image
+                  </h4>
+
+                  <form class="w-100 d-flex flex-column align-items-center">
+                    <div
+                      class="mb-3"
+                      style="max-width: 500px; width: 100%; margin: auto"
+                    >
+                      <label for="line" class="form-label">線別</label>
+                      <select class="form-select line" id="line" required>
+                        <option value="">請選擇線別</option>
+                      </select>
+                    </div>
+
+                    <div
+                      class="mb-3"
+                      style="max-width: 500px; width: 100%; margin: auto"
+                    >
+                      <label for="date" class="form-label">日期</label>
+                      <input
+                        class="form-control"
+                        type="date"
+                        id="date"
+                        name="date"
+                        required
+                      />
+                    </div>
+
+                    <div
+                      class="mb-3"
+                      style="max-width: 500px; width: 100%; margin: auto"
+                    >
+                      <label for="sn" class="form-label">SN</label>
+                      <input
+                        class="form-control"
+                        type="text"
+                        id="sn"
+                        name="sn"
+                        required
+                      />
+                    </div>
+
+                    <div
+                      class="mb-3"
+                      style="max-width: 500px; width: 100%; margin: auto"
+                    >
+                      <label for="comp" class="form-label">Comp</label>
+                      <input
+                        class="form-control"
+                        type="text"
+                        id="comp"
+                        name="comp"
+                        required
+                      />
+                    </div>
+
+                    <p class="mt-3 text-muted"></p>
+                    <button
+                      type="submit"
+                      class="btn btn-primary"
+                      id="downloadBtn"
+                      data-bs-toggle="downloadtips"
+                      data-bs-placement="bottom"
+                      title="點擊按鈕下載檔案"
+                    >
+                      Download
+                    </button>
+                    <p class="mb-3 text-muted"></p>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="tab-pane fade"
+          id="pills-upload-csv-for-download"
+          role="tabpanel"
+          aria-labelledby="pills-upload-csv-for-download-tab"
+        >
+          <div class="row justify-content-center">
+            <div class="col-md-4">
+              <div class="card shadow">
+                <div class="card-body d-flex flex-column align-items-center">
+                  <h4
+                    class="card-title mb-5"
+                    data-relingo-block="true"
+                    data-relin-paragraph="3"
+                  >
+                    Upload CSV for Download
+                  </h4>
+
+                  <form
+                    class="w-100 d-flex flex-column align-items-center"
+                    id="uploadForm"
+                  >
+                    <div
+                      class="mb-3"
+                      style="max-width: 500px; width: 100%; margin: auto"
+                    >
+                      <input
+                        class="form-control"
+                        type="file"
+                        name="csvFile"
+                        accept=".csv"
+                      />
+                    </div>
+
+                    <p class="mt-3 text-muted"></p>
+                    <button type="submit" class="btn btn-primary">
+                      上傳 CSV
+                    </button>
+                    <p class="mb-3 text-muted"></p>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="tab-pane fade show active"
+          id="pills-show-images"
+          role="tabpanel"
+          aria-labelledby="pills-show-images-tab"
+        >
+          <div class="row justify-content-center mb-5">
+            <div class="col-md-4">
+              <div class="card shadow">
+                <div class="card-body d-flex flex-column align-items-center">
+                  <h4
+                    class="card-title mb-5"
+                    data-relingo-block="true"
+                    data-relin-paragraph="4"
+                  >
+                    AMR Images Show
+                  </h4>
+
+                  <form class="w-100 d-flex flex-column align-items-center">
+                    <div
+                      class="mb-3"
+                      style="max-width: 500px; width: 100%; margin: auto"
+                    >
+                      <label for="line" class="form-label">線別</label>
+                      <select class="form-select line" id="img_line" required>
+                        <option value="">請選擇線別</option>
+                      </select>
+                    </div>
+
+                    <div
+                      class="mb-3"
+                      style="max-width: 500px; width: 100%; margin: auto"
+                    >
+                      <label for="date" class="form-label">日期</label>
+                      <input
+                        class="form-control"
+                        type="date"
+                        id="img_date"
+                        name="date"
+                        required
+                      />
+                    </div>
+
+                    <div
+                      class="mb-3"
+                      style="max-width: 500px; width: 100%; margin: auto"
+                    >
+                      <label for="sn" class="form-label">SN</label>
+                      <input
+                        class="form-control"
+                        type="text"
+                        id="img_sn"
+                        name="sn"
+                        required
+                      />
+                    </div>
+
+                    <div
+                      class="mb-3"
+                      style="max-width: 500px; width: 100%; margin: auto"
+                    >
+                      <label for="comp" class="form-label">Comp</label>
+                      <input
+                        class="form-control"
+                        type="text"
+                        id="img_comp"
+                        name="comp"
+                        required
+                      />
+                    </div>
+
+                    <p class="mt-3 text-muted"></p>
+                    <button
+                      type="submit"
+                      class="btn btn-primary"
+                      id="showImageBtn"
+                      data-bs-toggle="showimagetips"
+                      data-bs-placement="bottom"
+                      title="點擊按鈕顯示圖片"
+                    >
+                      Show
+                    </button>
+                    <p class="mb-3 text-muted"></p>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row justify-content-center">
+            <div class="col-md-8">
+              <div id="imageContainer" class="md-3 mt-3"></div>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="tab-pane fade"
+          id="pills-produce-report"
+          role="tabpanel"
+          aria-labelledby="pills-produce-report-tab"
+        >
+          <div class="row justify-content-center">
+            <div class="col-md-4">
+              <div class="card shadow">
+                <div class="card-body d-flex flex-column align-items-center">
+                  <h4
+                    class="card-title mb-5"
+                    data-relingo-block="true"
+                    data-relin-paragraph="5"
+                  >
+                    Produce AMR Report
+                  </h4>
+
+                  <form
+                    class="w-100 d-flex flex-column align-items-center"
+                    id="reportForm"
+                  >
+                    <div
+                      class="mb-3"
+                      style="max-width: 500px; width: 100%; margin: auto"
+                    >
+                      <label for="line" class="form-label">線別</label>
+                      <select class="form-select line" id="line" required>
+                        <option value="">請選擇線別</option>
+                      </select>
+                    </div>
+
+                    <div
+                      class="mb-3"
+                      style="max-width: 500px; width: 100%; margin: auto"
+                    >
+                      <label for="startDate" class="form-label">起始日期</label>
+                      <input
+                        class="form-control"
+                        type="date"
+                        id="startDate"
+                        name="startDate"
+                        required
+                      />
+                    </div>
+
+                    <div
+                      class="mb-3"
+                      style="max-width: 500px; width: 100%; margin: auto"
+                    >
+                      <label for="endDate" class="form-label">結束日期</label>
+                      <input
+                        class="form-control"
+                        type="date"
+                        id="endDate"
+                        name="endDate"
+                        required
+                      />
+                    </div>
+
+                    <div
+                      class="mb-3"
+                      style="max-width: 500px; width: 100%; margin: auto"
+                    >
+                      <label for="model" class="form-label">模型名稱</label>
+                      <input
+                        class="form-control"
+                        type="text"
+                        id="model"
+                        name="model"
+                        required
+                      />
+                    </div>
+
+                    <p class="mt-3 text-muted"></p>
+                    <button
+                      type="submit"
+                      class="btn btn-primary"
+                      data-bs-toggle="downloadtips"
+                      data-bs-placement="bottom"
+                      title="點擊按鈕下載報告"
+                    >
+                      Download Report
+                    </button>
+                    <p class="mb-3 text-muted"></p>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer class="footer mt-auto py-3 bg-light">
+      <div
+        class="container d-flex justify-content-center align-items-center"
+        style="height: 100px"
+      >
+        <!-- 假設的高度 -->
+        <span class="text-muted">© 2024 USI, Inc. All rights reserved </span>
+      </div>
+    </footer>
+
+    <script src="assets/jquery.min.js"></script>
+    <script src="assets/bootstrap.bundle.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        fetch("/lines")
+          .then((response) => response.json())
+          .then((data) => {
+            const lineSelect = document.querySelectorAll(".line");
+            if (!lineSelect) {
+              console.error("Select element not found");
+              return;
+            }
+            lineSelect.forEach((select) => {
+              data.lines.forEach((line) => {
+                select.add(new Option(line, line));
+              });
+            });
+          })
+          .catch((error) => console.error("Error fetching line data:", error));
+      });
+
+      function formatDate(date) {
+        var year = date.getFullYear();
+        var month = (date.getMonth() + 1).toString().padStart(2, "0");
+        var day = date.getDate().toString().padStart(2, "0");
+        return year + "-" + month + "-" + day;
+      }
+
+      $(document).ready(function () {
+        $("#downloadBtn").click(function () {
+          var line = $("#line").val();
+          var selectedDate = $("#date").val();
+          var sn = $("#sn").val();
+          var comp = $("#comp").val();
+
+          // 在前端進行必填驗證
+          if (line === "" || selectedDate === "" || sn === "" || comp === "") {
+            alert("線別、日期、SN 和 Comp 欄位為必填");
+            return;
+          }
+
+          // 將選擇的日期格式化為'YYYY-MM-DD'
+          var formattedDate = formatDate(new Date(selectedDate));
+
+          // 將選擇的日期、SN和Comp傳遞給API
+          // 替換API_ENDPOINT為實際的API端點
+          var apiUrl =
+            "/download" +
+            "?line=" +
+            encodeURIComponent(line) +
+            "&date=" +
+            encodeURIComponent(formattedDate) +
+            "&sn=" +
+            encodeURIComponent(sn) +
+            "&comp=" +
+            encodeURIComponent(comp);
+
+          window.open(apiUrl, "_blank");
+        });
+
+        $("#showImageBtn").click(function () {
+          event.preventDefault();
+
+          var line = $("#img_line").val();
+          var selectedDate = $("#img_date").val();
+          var sn = $("#img_sn").val();
+          var comp = $("#img_comp").val();
+          var allFieldsFilled = true;
+
+          // 清除之前的錯誤標記
+          $(".error").removeClass("error");
+
+          // 在前端進行必填驗證
+          if (line === "") {
+            $("#img_line").addClass("error");
+            allFieldsFilled = false;
+          }
+          if (selectedDate === "") {
+            $("#img_date").addClass("error");
+            allFieldsFilled = false;
+          }
+          if (sn === "") {
+            $("#img_sn").addClass("error");
+            allFieldsFilled = false;
+          }
+          if (comp === "") {
+            $("#img_comp").addClass("error");
+            allFieldsFilled = false;
+          }
+
+          // 在前端進行必填驗證
+          if (line === "" || selectedDate === "" || sn === "" || comp === "") {
+            alert("線別、日期、SN 和 Comp 欄位為必填");
+            return;
+          }
+
+          // 將選擇的日期格式化為'YYYY-MM-DD'
+          var formattedDate = formatDate(new Date(selectedDate));
+
+          $.ajax({
+            url: "/show_images",
+            data: {
+              line: line,
+              date: formattedDate,
+              sn: sn,
+              comp: comp,
+            },
+            type: "GET",
+            success: function (response) {
+              if (!response.imageFiles || !Array.isArray(response.imageFiles)) {
+                console.error(
+                  "Received data is not an array:",
+                  response.imageFiles
+                );
+                return; // 終止函數執行
+              }
+
+              // 處理回傳的圖片資料，並顯示在前端
+              var container = document.getElementById("imageContainer");
+              container.innerHTML = "";
+
+              var table = document.createElement("table");
+              table.classList.add(
+                "table",
+                "align-baseline",
+                "table-responsive",
+                "shadow-sm"
+              );
+              var thead = document.createElement("thead");
+              thead.classList.add("table-hover", "table-primary");
+              var tbody = document.createElement("tbody");
+
+              var headerRow = document.createElement("tr");
+              var headerFileNumber = document.createElement("th");
+              headerFileNumber.classList.add("text-center");
+              headerFileNumber.textContent = "#";
+              var headerFileName = document.createElement("th");
+              headerFileName.classList.add("text-center");
+              headerFileName.textContent = "檔名";
+              var headerImage = document.createElement("th");
+              headerImage.classList.add("text-center");
+              headerImage.textContent = "圖片";
+              var headerAIResult = document.createElement("th");
+              headerAIResult.classList.add("text-center");
+              headerAIResult.textContent = "AI Result";
+
+              headerRow.appendChild(headerFileNumber);
+              headerRow.appendChild(headerFileName);
+              headerRow.appendChild(headerImage);
+              headerRow.appendChild(headerAIResult);
+              thead.appendChild(headerRow);
+              table.appendChild(thead);
+              response.imageFiles.forEach(function (file) {
+                var row = document.createElement("tr");
+                var fileNumberCell = document.createElement("td");
+                fileNumberCell.classList.add("text-center");
+                fileNumberCell.textContent =
+                  response.imageFiles.indexOf(file) + 1;
+                var fileNameCell = document.createElement("td");
+                fileNameCell.classList.add("text-center");
+                fileNameCell.textContent = file.path;
+                var imageCell = document.createElement("td");
+                imageCell.classList.add("text-center");
+                var img = document.createElement("img");
+                img.classList.add("figure-img");
+                img.src = "/images/" + file.path;
+                imageCell.appendChild(img);
+                var aiResultCell = document.createElement("td");
+                aiResultCell.classList.add("text-center");
+                aiResultCell.textContent = file.ai_result;
+
+                row.appendChild(fileNumberCell);
+                row.appendChild(fileNameCell);
+                row.appendChild(imageCell);
+                row.appendChild(aiResultCell);
+                tbody.appendChild(row);
+              });
+
+              table.appendChild(tbody);
+              var card = document.createElement("div");
+              card.classList.add("card", "shadow", "mb-3", "mt-3");
+              var cardBody = document.createElement("div");
+              cardBody.classList.add("card-body", "d-flex", "flex-column");
+              var cardTitle = document.createElement("h4");
+              cardTitle.classList.add("card-title");
+              cardTitle.textContent = "Results";
+              cardTitle.classList.add("text-center", "mb-3");
+              cardBody.appendChild(cardTitle);
+              cardBody.appendChild(table);
+              card.appendChild(cardBody);
+              container.appendChild(card);
+            },
+            error: function (xhr, status, error) {
+              try {
+                var errorResponse = JSON.parse(xhr.responseText);
+                if (errorResponse.error) {
+                  alert(errorResponse.error);
+                } else {
+                  alert("無法連接到伺服器");
+                }
+              } catch (e) {
+                alert("發生未知錯誤");
+              }
+            },
+          });
+        });
+      });
+
+      function downloadBlobAsFile(blob, filename) {
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = filename;
+        link.click();
+        URL.revokeObjectURL(url);
+      }
+
+      document.addEventListener("DOMContentLoaded", function () {
+        var uploadForm = document.getElementById("uploadForm");
+        uploadForm.addEventListener("submit", function (event) {
+          event.preventDefault();
+          var formData = new FormData(uploadForm);
+
+          fetch("/upload_csv", {
+            method: "POST",
+            body: formData,
+          })
+            .then((response) => response.blob())
+            .then((blob) => {
+              const url = window.URL.createObjectURL(blob);
+              const a = document.createElement("a");
+              a.href = url;
+              a.download = "downloaded.zip"; // 下載的檔案名稱
+              document.body.appendChild(a);
+              a.click();
+              a.remove();
+            })
+            .catch((error) => {
+              console.error("處理下載時發生錯誤：", error);
+            });
+        });
+      });
+      $(document).ready(function () {
+        $("#reportForm").submit(function (event) {
+          event.preventDefault();
+
+          var formData = {
+            startDate: $("#startDate").val(),
+            endDate: $("#endDate").val(),
+            model: $("#model").val(),
+          };
+
+          $.ajax({
+            url: "/report_script",
+            type: "GET",
+            data: formData,
+            xhrFields: {
+              responseType: "blob",
+            },
+            success: function (response) {
+              var url = window.URL.createObjectURL(new Blob([response]));
+              var a = document.createElement("a");
+              a.href = url;
+              a.download = "report.xlsx"; // 設置下載檔名，根據實際情況調整
+              document.body.appendChild(a);
+              a.click();
+              a.remove();
+              window.URL.revokeObjectURL(url);
+            },
+            error: function (xhr, status, error) {
+              try {
+                var errorResponse = JSON.parse(xhr.responseText);
+                if (errorResponse.error) {
+                  alert(errorResponse.error);
+                } else {
+                  alert("無法連接到伺服器");
+                }
+              } catch (e) {
+                alert("發生未知錯誤");
+              }
+            },
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
