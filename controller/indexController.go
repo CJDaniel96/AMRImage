@@ -1,10 +1,11 @@
 package controller
 
 import (
-	"github.com/gin-gonic/gin"
-	"net/http"
 	"AMRImage/configs"
-	"io/ioutil"
+	"net/http"
+	"os"
+
+	"github.com/gin-gonic/gin"
 )
 
 func Index(c *gin.Context) {
@@ -14,7 +15,7 @@ func Index(c *gin.Context) {
 func Lines(c *gin.Context) {
 	config := configs.GetConfig()
 	lines := []string{}
-	files, err := ioutil.ReadDir(config.DataFolder.SfcTempPath)
+	files, err := os.ReadDir(config.DataFolder.SfcTempPath)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to read lines"})
 		return

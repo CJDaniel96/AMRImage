@@ -27,7 +27,10 @@ func (p *program) Stop(s service.Service) error {
 func (p *program) run() {
 	config := configs.GetConfig()
 	r := router.InitRouter()
-	r.Run(fmt.Sprintf("%s:%d", config.App.Host, config.App.Port))
+	err := r.Run(fmt.Sprintf("%s:%d", config.App.Host, config.App.Port))
+	if err != nil {
+		log.Fatalf("failed to run router: %v", err)
+	}
 }
 
 func main() {

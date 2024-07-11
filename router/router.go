@@ -2,8 +2,11 @@ package router
 
 import (
 	"AMRImage/configs"
-	"github.com/gin-gonic/gin"
 	"AMRImage/controller"
+	"os"
+	"path/filepath"
+
+	"github.com/gin-gonic/gin"
 )
 
 func InitRouter() *gin.Engine {
@@ -17,8 +20,14 @@ func InitRouter() *gin.Engine {
 
 func registerRouter(r *gin.Engine) {
 	config := configs.GetConfig()
-	r.LoadHTMLGlob("assets/*")
-	r.Static("/assets", "./assets")
+
+	exePath, err := os.Executable()
+	if err == nil {
+		exeDir := filepath.Dir(exePath)
+		r.LoadHTMLGlob(filepath.Join(exeDir, "assets/*"))
+		r.Static("/assets", filepath.Join(exeDir, "assets"))
+	}
+
 	r.Static("/images", config.DataFolder.SfcTempPath)
 	r.GET("/", controller.Index)
 	r.GET("/download", controller.Download)
