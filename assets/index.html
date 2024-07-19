@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>下載檔案</title>
+    <title>AMR Image Data Center</title>
     <link rel="stylesheet" type="text/css" href="assets/bootstrap.min.css" />
     <style>
       body {
@@ -436,7 +436,7 @@
     <script src="assets/bootstrap.bundle.min.js"></script>
     <script>
       document.addEventListener("DOMContentLoaded", function () {
-        fetch("/lines")
+        fetch("/api/v1/lines")
           .then((response) => response.json())
           .then((data) => {
             const lineSelect = document.querySelectorAll(".line");
@@ -479,7 +479,7 @@
           // 將選擇的日期、SN和Comp傳遞給API
           // 替換API_ENDPOINT為實際的API端點
           var apiUrl =
-            "/download" +
+            "/api/v1/download" +
             "?line=" +
             encodeURIComponent(line) +
             "&date=" +
@@ -532,7 +532,7 @@
           var formattedDate = formatDate(new Date(selectedDate));
 
           $.ajax({
-            url: "/show_images",
+            url: "/api/v1/show_images",
             data: {
               line: line,
               date: formattedDate,
@@ -655,7 +655,7 @@
           event.preventDefault();
           var formData = new FormData(uploadForm);
 
-          fetch("/upload_csv", {
+          fetch("/api/v1/upload_csv", {
             method: "POST",
             body: formData,
           })
@@ -685,7 +685,7 @@
           };
 
           $.ajax({
-            url: "/report_script",
+            url: "/api/v1/report_script",
             type: "GET",
             data: formData,
             xhrFields: {

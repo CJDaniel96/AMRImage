@@ -6,7 +6,11 @@ import (
 	"os"
 	"path/filepath"
 
+	docs "AMRImage/docs"
+
 	"github.com/gin-gonic/gin"
+	swaggerfiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
 func InitRouter() *gin.Engine {
@@ -19,8 +23,10 @@ func InitRouter() *gin.Engine {
 }
 
 func registerRouter(r *gin.Engine) {
-	config := configs.GetConfig()
+	docs.SwaggerInfo.BasePath = "/api/v1"
+	v1 := r.Group("/api/v1")
 
+	config := configs.GetConfig()
 	exePath, err := os.Executable()
 	if err == nil {
 		exeDir := filepath.Dir(exePath)
@@ -30,8 +36,13 @@ func registerRouter(r *gin.Engine) {
 
 	r.Static("/images", config.DataFolder.SfcTempPath)
 	r.GET("/", controller.Index)
-	r.GET("/download", controller.Download)
-	r.GET("/lines", controller.Lines)
-	r.GET("/show_images", controller.ShowImages)
-	r.GET("/report_script", controller.ReportScript)
+
+	{
+		v1.GET("/download", controller.Download)
+		v1.GET("/lines", controller.Lines)
+		v1.GET("/show_images", controller.ShowImages)
+		v1.GET("/report_script", controller.ReportScript)
+	}
+
+	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
 }

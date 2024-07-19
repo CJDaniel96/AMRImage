@@ -52,6 +52,14 @@ http://<host>:<port>
 
 Where `<host>` and `<port>` are configured in the `configs/configs.json` file.
 
+## Accessing Swagger UI
+
+Swagger UI is available at:
+
+http://<host>:<port>/swagger/index.html
+
+This provides a web-based interface to interact with the API endpoints.
+
 ## Configuration
 
 The configuration file is located at `configs/configs.json`. Example:

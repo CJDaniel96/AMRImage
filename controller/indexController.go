@@ -12,6 +12,18 @@ func Index(c *gin.Context) {
 	c.HTML(200, "index.html", gin.H{})
 }
 
+// GetLines      godoc
+//
+//	@Summary		Get all lines
+//	@Description	Get all lines
+//	@Tags			lines
+//	@Accept			json
+//	@Produce		json
+//	@Success		200	{object}	string
+//	@Failure		400	{object}	string
+//	@Failure		404	{object}	string
+//	@Failure		500	{object}	string
+//	@Router			/api/v1/lines [get]
 func Lines(c *gin.Context) {
 	config := configs.GetConfig()
 	lines := []string{}
