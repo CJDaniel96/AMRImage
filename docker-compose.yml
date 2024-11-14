@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  backend:
+    build: ./backend
+    container_name: backend
+    command: go run main.go
+    volumes:
+      - ./backend:/usr/src/app
+      - static:/usr/src/app/static
+    networks:
+      - webnet
+
+  frontend:
+    build: ./frontend
+    container_name: frontend
+    command: npm run dev
+    volumes:
+      - ./frontend:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+     - "8080:8080"
+    networks:
+      - webnet
+
+  nginx:
+    build: ./nginx
+    container_name: nginx
+    ports:
+      - "80:80"
+    volumes:
+      - static:/usr/src/app/static
+    depends_on:
+      - backend
+      - frontend
+    networks:
+      - webnet
+
+volumes:
+  static:
+
+networks:
+  webnet:
