@@ -120,7 +120,7 @@
                       style="max-width: 500px; width: 100%; margin: auto"
                     >
                       <label for="line" class="form-label">線別</label>
-                      <select class="form-select line" id="line" required>
+                      <select class="form-select line" id="dl_line" required>
                         <option value="">請選擇線別</option>
                       </select>
                     </div>
@@ -133,7 +133,7 @@
                       <input
                         class="form-control"
                         type="date"
-                        id="date"
+                        id="dl_date"
                         name="date"
                         required
                       />
@@ -147,7 +147,7 @@
                       <input
                         class="form-control"
                         type="text"
-                        id="sn"
+                        id="dl_sn"
                         name="sn"
                         required
                       />
@@ -158,13 +158,9 @@
                       style="max-width: 500px; width: 100%; margin: auto"
                     >
                       <label for="comp" class="form-label">Comp</label>
-                      <input
-                        class="form-control"
-                        type="text"
-                        id="comp"
-                        name="comp"
-                        required
-                      />
+                      <select class="form-select line" id="dl_comp" name="comp" required>
+                        <option value="">請先選擇線別、日期和SN</option>
+                      </select>
                     </div>
 
                     <p class="mt-3 text-muted"></p>
@@ -294,13 +290,9 @@
                       style="max-width: 500px; width: 100%; margin: auto"
                     >
                       <label for="comp" class="form-label">Comp</label>
-                      <input
-                        class="form-control"
-                        type="text"
-                        id="img_comp"
-                        name="comp"
-                        required
-                      />
+                      <select class="form-select line" id="img_comp" name="comp" required>
+                        <option value="">請先選擇線別、日期和SN</option>
+                      </select>
                     </div>
 
                     <p class="mt-3 text-muted"></p>
@@ -451,33 +443,110 @@
             });
           })
           .catch((error) => console.error("Error fetching line data:", error));
-      });
 
-      function formatDate(date) {
-        var year = date.getFullYear();
-        var month = (date.getMonth() + 1).toString().padStart(2, "0");
-        var day = date.getDate().toString().padStart(2, "0");
-        return year + "-" + month + "-" + day;
-      }
+        function fetchCompOptions(prefix) {
+          var line = $("#" + prefix + "_line").val();
+          var selectedDate = $("#" + prefix + "_date").val();
+          var sn = $("#" + prefix + "_sn").val();
 
-      $(document).ready(function () {
-        $("#downloadBtn").click(function () {
-          var line = $("#line").val();
-          var selectedDate = $("#date").val();
-          var sn = $("#sn").val();
-          var comp = $("#comp").val();
+          if (line && selectedDate && sn) {
+            var formattedDate = formatDate(new Date(selectedDate));
+            
+            $.ajax({
+              url: "api/v1/get_comp_list",
+              data: {
+                line: line,
+                date: formattedDate,
+                sn: sn,
+              },
+              type: "GET",
+              success: function (response) {
+                var compSelect = $("#img_comp");
+                compSelect.empty();
+                if (response.comps && Array.isArray(response.comps)) {
+                  compSelect.append(new Option("請選擇 Comp", ""));
+                  response.comps.forEach(function (comp) {
+                    compSelect.append(new Option(comp, comp));
+                  });
+                } else {
+                  compSelect.append(new Option("無可用的 Comp", ""));
+                }
+              },
+              error: function (xhr, status, error) {
+                console.error("Error fetching comp data:", error);
+              },
+            });
+          }
+        }
 
-          // 在前端進行必填驗證
-          if (line === "" || selectedDate === "" || sn === "" || comp === "") {
+        $("#dl_line").on("change", function () {
+          fetchCompOptions("dl")
+        });
+        $("#dl_date").on("change", function () {
+          fetchCompOptions("dl")
+        });
+        $("#dl_sn").on("change", function () {
+          fetchCompOptions("dl")
+        });
+
+        $("#img_line").on("change", function () {
+          fetchCompOptions("img")
+        });
+        $("#img_date").on("change", function () {
+          fetchCompOptions("img")
+        });
+        $("#img_sn").on("change", function () {
+          fetchCompOptions("img")
+        });
+
+        function formatDate(date) {
+          var year = date.getFullYear();
+          var month = (date.getMonth() + 1).toString().padStart(2, "0");
+          var day = date.getDate().toString().padStart(2, "0");
+          return year + "-" + month + "-" + day;
+        }
+
+        $("#downloadBtn").click(function (event) {
+          event.preventDefault();
+          var line = $("#dl_line").val();
+          var selectedDate = $("#dl_date").val();
+          var sn = $("#dl_sn").val();
+          var comp = $("#dl_comp").val();
+
+          var allFieldsFilled = true;
+          if (line === "") {
+            $("#dl_line").addClass("error");
+            allFieldsFilled = false;
+          } else {
+            $("#dl_line").removeClass("error");
+          }
+          if (selectedDate === "") {
+            $("#dl_date").addClass("error");
+            allFieldsFilled = false;
+          } else {
+            $("#dl_date").removeClass("error");
+          }
+          if (sn === "") {
+            $("#dl_sn").addClass("error");
+            allFieldsFilled = false;
+          } else {
+            $("#dl_sn").removeClass("error");
+          }
+          if (comp === "") {
+            $("#dl_comp").addClass("error");
+            allFieldsFilled = false;
+          } else {
+            $("#dl_comp").removeClass("error");
+          }
+
+          if (!allFieldsFilled) {
             alert("線別、日期、SN 和 Comp 欄位為必填");
             return;
           }
 
-          // 將選擇的日期格式化為'YYYY-MM-DD'
           var formattedDate = formatDate(new Date(selectedDate));
 
-          // 將選擇的日期、SN和Comp傳遞給API
-          // 替換API_ENDPOINT為實際的API端點
+          // 構建 API URL
           var apiUrl =
             "/api/v1/download" +
             "?line=" +
@@ -492,7 +561,7 @@
           window.open(apiUrl, "_blank");
         });
 
-        $("#showImageBtn").click(function () {
+        $("#showImageBtn").click(function (event) {
           event.preventDefault();
 
           var line = $("#img_line").val();
@@ -522,8 +591,7 @@
             allFieldsFilled = false;
           }
 
-          // 在前端進行必填驗證
-          if (line === "" || selectedDate === "" || sn === "" || comp === "") {
+          if (!allFieldsFilled) {
             alert("線別、日期、SN 和 Comp 欄位為必填");
             return;
           }
@@ -541,6 +609,8 @@
             },
             type: "GET",
             success: function (response) {
+              // 處理回傳的圖片資料，並顯示在前端
+              // 代碼保持不變
               if (!response.imageFiles || !Array.isArray(response.imageFiles)) {
                 console.error(
                   "Received data is not an array:",
@@ -597,7 +667,10 @@
                 imageCell.classList.add("text-center");
                 var img = document.createElement("img");
                 img.classList.add("figure-img");
-                img.src = "/images/" + file.path;
+                img.src = "/images/" + file.path.replace(/\\/g, "/").split("/").map(encodeURIComponent).join("/");
+                img.style.width = "150px";
+                img.style.height = "150px";
+                img.style.objectFit = "cover"
                 imageCell.appendChild(img);
                 var aiResultCell = document.createElement("td");
                 aiResultCell.classList.add("text-center");
@@ -638,18 +711,16 @@
             },
           });
         });
-      });
 
-      function downloadBlobAsFile(blob, filename) {
-        const url = URL.createObjectURL(blob);
-        const link = document.createElement("a");
-        link.href = url;
-        link.download = filename;
-        link.click();
-        URL.revokeObjectURL(url);
-      }
+        function downloadBlobAsFile(blob, filename) {
+          const url = URL.createObjectURL(blob);
+          const link = document.createElement("a");
+          link.href = url;
+          link.download = filename;
+          link.click();
+          URL.revokeObjectURL(url);
+        }
 
-      document.addEventListener("DOMContentLoaded", function () {
         var uploadForm = document.getElementById("uploadForm");
         uploadForm.addEventListener("submit", function (event) {
           event.preventDefault();
@@ -673,8 +744,7 @@
               console.error("處理下載時發生錯誤：", error);
             });
         });
-      });
-      $(document).ready(function () {
+
         $("#reportForm").submit(function (event) {
           event.preventDefault();
 
