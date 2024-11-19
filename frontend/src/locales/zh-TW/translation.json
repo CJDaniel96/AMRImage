@@ -30,6 +30,8 @@
     "404_message": "您要尋找的頁面不存在",
     "go_to_home": "回到首頁",
     "light_source": "光源",
-    "select_light_sources": "選擇光源"
+    "select_light_sources": "選擇光源",
+    "enlarged_image": "放大影像",
+    "close": "關閉"
   }
   

@@ -6,6 +6,8 @@ import useLines from "../hooks/useLines";
 import useComps from "../hooks/useComps";
 import { handleFormChange } from "../utils/handleFormChange";
 import { ImageFormFields } from "./FormFields";
+import Modal from "react-bootstrap/Modal";
+import Button from "react-bootstrap/Button";
 
 function ShowImages() {
   const { t } = useTranslation();
@@ -20,6 +22,8 @@ function ShowImages() {
   const comps = useComps(formData.line, formData.date, formData.sn);
   const [imageFiles, setImageFiles] = useState([]);
   const [selectedLights, setSelectedLights] = useState([]);
+  const [modalShow, setModalShow] = useState(false);
+  const [selectedImage, setSelectedImage] = useState([]);
 
   const handleChange = handleFormChange(setFormData);
 
@@ -68,7 +72,7 @@ function ShowImages() {
     })
     : imageFiles;
 
-  function extractLightSource(filename) {
+  const extractLightSource = (filename) => {
     const regex = /_([^_.]+)\./;
     const match = filename.match(regex);
 
@@ -77,6 +81,11 @@ function ShowImages() {
     } else {
       return null;
     }
+  }
+
+  const handleImageClick = (imagePath) => {
+    setSelectedImage(`/images/${encodeURIComponent(imagePath.replace(/\\/g, "/"))}`)
+    setModalShow(true);
   }
 
   return (
@@ -156,7 +165,8 @@ function ShowImages() {
                                 src={`/images/${encodeURIComponent(file.path.replace(/\\/g, "/"))}`}
                                 alt="AMR"
                                 className="img-fluid img-thumbnail"
-                                style={{ maxWidth: "150px" }}
+                                style={{ maxWidth: "150px", cursor: "pointer" }}
+                                onClick={() => handleImageClick(file.path)}
                               />
                             </td>
                             <td className="text-center align-middle">{light}</td>
@@ -172,6 +182,21 @@ function ShowImages() {
           </div>
         </div>
       )}
+
+      {/* Modal for enlarged image */}
+      <Modal show={modalShow} onHide={() => setModalShow(false)} centered size="lg">
+        <Modal.Header closeButton>
+          <Modal.Title>{t("enlarged_image")}</Modal.Title>
+        </Modal.Header>
+        <Modal.Body className="text-center">
+          <img src={selectedImage} alt="Enlarged AMR" style={{ maxWidth: "100%", MaxHeight: "100%" }} />
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setModalShow(false)}>
+            {t("close")}
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </>
   );
 }

@@ -30,6 +30,8 @@
     "404_message": "The page you are looking for does not exist",
     "go_to_home": "Go to Home",
     "light_source": "Light Source",
-    "select_light_sources": "Select Light Source"
+    "select_light_sources": "Select Light Source",
+    "enlarged_image": "Enlarged Image",
+    "close": "Close"
   }
   
