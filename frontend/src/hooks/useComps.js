@@ -1,6 +1,6 @@
 // src/hooks/useComps.js
-import { useEffect, useState } from "react";
-import axios from "axios";
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 function useComps(line, date, sn) {
   const [comps, setComps] = useState([]);
@@ -8,13 +8,16 @@ function useComps(line, date, sn) {
   useEffect(() => {
     if (line && date && sn) {
       axios
-        .get("/api/v1/get_comp_list", { params: { line, date, sn } })
+        .get('/api/v1/comp_list', {
+          params: { line, date, sn },
+        })
         .then((response) => {
-          setComps(response.data.comps || []);
+          const compList = response.data.comps || [];
+          setComps(['ALL', ...compList]);
         })
         .catch((error) => {
-          console.error("Error fetching comps:", error);
-          setComps([]); // 出现错误时设置为空数组
+          console.error('Error fetching comps:', error);
+          setComps([]);
         });
     } else {
       setComps([]);

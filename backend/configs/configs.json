@@ -6,9 +6,9 @@
         "port": 9999
     },
     "data_folder": {
-        "ai_result_folder": "E:/ai_result",
+        "ai_result_folder": "D:/Daniel/Project/Code/AMRImage-test/ai_result",
         "report_path": "E:/AMR/ai_report",
-        "sfctemp_path": "E:/sfcTemp"
+        "sfctemp_path": "D:/Daniel/Project/Code/AMRImage-test/sfcTemp"
     },
     "database": {
         "host": "localhost",

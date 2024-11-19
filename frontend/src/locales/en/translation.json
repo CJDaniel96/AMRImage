@@ -28,6 +28,8 @@
     "ai_results": "AI Results",
     "404_title": "404 - Not Found",
     "404_message": "The page you are looking for does not exist",
-    "go_to_home": "Go to Home"
+    "go_to_home": "Go to Home",
+    "light_source": "Light Source",
+    "select_light_sources": "Select Light Source"
   }
   

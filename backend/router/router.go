@@ -1,12 +1,12 @@
 package router
 
 import (
-	"AMRImage/configs"
-	"AMRImage/controller"
+	"backend/configs"
+	"backend/controller"
 	"os"
 	"path/filepath"
 
-	docs "AMRImage/docs"
+	docs "backend/docs"
 
 	"github.com/gin-gonic/gin"
 	swaggerfiles "github.com/swaggo/files"
@@ -46,6 +46,7 @@ func registerRouter(r *gin.Engine) {
 		v1.GET("/lines", controller.Lines)
 		v1.GET("/show_images", controller.ShowImages)
 		v1.GET("/report_script", controller.ReportScript)
+		v1.GET("/comp_list", controller.CompList)
 	}
 
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))

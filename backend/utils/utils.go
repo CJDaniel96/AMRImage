@@ -1,8 +1,8 @@
 package utils
 
 import (
-	"AMRImage/configs"
 	"archive/zip"
+	"backend/configs"
 	"fmt"
 	"io"
 	"os"
@@ -15,11 +15,25 @@ import (
 func FindMatchingFiles(dirPath, sn, comp string) ([]string, error) {
 	config := configs.GetConfig()
 	compPattern := "*"
-	if comp != "all" {
+	if comp != "ALL" {
 		compPattern = comp
 	}
 	pattern := filepath.Join(config.DataFolder.SfcTempPath, dirPath, "*", fmt.Sprintf("*%s*%s*", sn, compPattern))
-	return filepath.Glob(pattern)
+
+	matches, err := filepath.Glob(pattern)
+	if err != nil {
+		return nil, err
+	}
+
+	var filteredMatches []string
+	for _, match := range matches {
+		ext := strings.ToLower(filepath.Ext(match))
+		if ext == ".jpg" || ext == ".jpeg" {
+			filteredMatches = append(filteredMatches, match)
+		}
+	}
+
+	return filteredMatches, nil
 }
 
 func SendZipContent(matchingFiles []string) io.Reader {
@@ -157,4 +171,41 @@ func GenerateReportScript(startDate, endDate, model string) ([]byte, error) {
 	}
 
 	return excelFileBytes, nil
+}
+
+func GetComps(line, date, sn string) ([]string, error) {
+	config := configs.GetConfig()
+	basePath := filepath.Join(config.DataFolder.AIResultFolder, line, date, sn)
+
+	if _, err := os.Stat(basePath); os.IsNotExist(err) {
+		return nil, fmt.Errorf("directory does not exist: %s", basePath)
+	}
+
+	comps := make(map[string]bool)
+
+	err := filepath.Walk(basePath, func(path string, info os.FileInfo, err error) error {
+		if err != nil {
+			return err
+		}
+
+		if !info.IsDir() && strings.HasSuffix(info.Name(), ".txt") {
+			parts := strings.Split(info.Name(), "@")
+			if len(parts) > 0 {
+				comp := parts[0]
+				comps[comp] = true
+			}
+		}
+		return nil
+	})
+
+	if err != nil {
+		return nil, err
+	}
+
+	compList := []string{}
+	for comp := range comps {
+		compList = append(compList, comp)
+	}
+
+	return compList, nil
 }

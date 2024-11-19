@@ -1,8 +1,8 @@
 package main
 
 import (
-	"AMRImage/configs"
-	"AMRImage/router"
+	"backend/configs"
+	"backend/router"
 	"fmt"
 	"log"
 	"os"

@@ -1,8 +1,8 @@
 package controller
 
 import (
-	"AMRImage/middleware"
-	"AMRImage/utils"
+	"backend/middleware"
+	"backend/utils"
 	"net/http"
 	"path/filepath"
 

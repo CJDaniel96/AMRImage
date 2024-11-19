@@ -1,7 +1,7 @@
 package controller
 
 import (
-	"AMRImage/utils"
+	"backend/utils"
 	"net/http"
 
 	"github.com/gin-gonic/gin"

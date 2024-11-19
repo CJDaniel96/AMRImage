@@ -1,7 +1,7 @@
 package controller
 
 import (
-	"AMRImage/configs"
+	"backend/configs"
 	"net/http"
 	"os"
 
