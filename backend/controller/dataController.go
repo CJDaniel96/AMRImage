@@ -6,6 +6,9 @@ import (
 	"net/http"
 	"path/filepath"
 
+	_ "image/jpeg"
+	_ "image/png"
+
 	"github.com/gin-gonic/gin"
 )
 
@@ -24,7 +27,7 @@ import (
 // @Failure 404 {object} string
 // @Failure 500 {object} string
 // @Router /api/v1/download [get]
-func Download(c *gin.Context) {
+func DownloadImages(c *gin.Context) {
 	line, date, sn, comp := c.Query("line"), c.Query("date"), c.Query("sn"), c.Query("comp")
 
 	if err := middleware.ValidateInputs(line, date, sn, comp); err != nil {

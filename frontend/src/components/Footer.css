@@ -1,0 +1,28 @@
+/* src/components/Footer.css */
+.footer-container {
+  background-color: var(--bg-secondary); /* 使用你的主題背景色 */
+  color: var(--text-secondary); /* 使用你的主題文字顏色 */
+  padding: 1.5rem 0; /* 上下邊距 */
+  margin-top: auto; /* 讓頁尾推到頁面底部 */
+  border-top: 1px solid var(--border-primary); /* 上邊框 */
+  text-align: center; /* 文字置中 */
+  width: 100%; /* 確保頁尾佔滿整個寬度 */
+}
+
+.footer-container .container {
+  /* 如果你的 .container 類別有最大寬度等限制，這裡會繼承 */
+  /* 確保內容在一定寬度內居中 */
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.footer-text {
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem; /* 增加行間距 */
+}
+
+.footer-info {
+  font-size: 0.8rem;
+  margin-bottom: 0; /* 移除最後一個段落的下邊距 */
+}

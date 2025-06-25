@@ -1,10 +1,12 @@
 {
     "download": "Download",
+    "download_images": "Download Images",
+    "download_table": "Download Table",
     "upload_csv_for_download": "Upload CSV for Download",
     "show": "Show",
     "show_images": "Show Images",
     "produce_report": "Produce Report",
-    "amr_image_data_center": "AMR Image Data Center",
+    "amr_image_tracing_system": "AOI+AI(AMR) Image & Result Tracing System",
     "line": "Line",
     "date": "Date",
     "sn": "SN",
@@ -29,9 +31,13 @@
     "404_title": "404 - Not Found",
     "404_message": "The page you are looking for does not exist",
     "go_to_home": "Go to Home",
+    "comp_name": "Tên thành phần",
     "light_source": "Light Source",
     "select_light_sources": "Select Light Source",
     "enlarged_image": "Enlarged Image",
-    "close": "Close"
+    "close": "Close",
+    "company_name_placeholder": "USI",
+    "all_rights_reserved": "All Rights Reserved.",
+    "contact_info_placeholder": ""
   }
   

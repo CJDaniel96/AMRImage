@@ -9,6 +9,7 @@ import (
 	"os/exec"
 	"path/filepath"
 	"regexp"
+	"strconv"
 	"strings"
 )
 
@@ -93,6 +94,8 @@ func GetAIResultValues(dirPath string, paths []string) ([]map[string]string, err
 			return nil, err
 		}
 		if values != nil {
+			fileName := filepath.Base(path)
+			values["light_source"] = ExtractLightSource(fileName)
 			result = append(result, values)
 		}
 	}
@@ -209,3 +212,14 @@ func GetComps(line, date, sn string) ([]string, error) {
 
 	return compList, nil
 }
+
+func ExtractLightSource(filename string) string {
+	re := regexp.MustCompile(`_([^_.]+)\.`)
+	match := re.FindStringSubmatch(filename)
+	if len(match) > 1 {
+		return match[1]
+	}
+	return ""
+}
+
+func Itoa(i int) string { return strconv.Itoa(i) }

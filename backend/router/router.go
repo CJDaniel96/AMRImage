@@ -37,12 +37,15 @@ func registerRouter(r *gin.Engine) {
 
 	r.Static("/assets", filepath.Join(frontendPath, "assets"))
 	r.StaticFile("/logo.png", filepath.Join(frontendPath, "logo.png"))
+	r.StaticFile("/logo_black.png", filepath.Join(frontendPath, "logo_black.png"))
 	r.StaticFile("/", filepath.Join(frontendPath, "index.html"))
 
 	r.Static("/images", config.DataFolder.SfcTempPath)
 
 	{
-		v1.GET("/download", controller.Download)
+		v1_download := v1.Group("/download")
+		v1_download.GET("/download_images", controller.DownloadImages)
+
 		v1.GET("/lines", controller.Lines)
 		v1.GET("/show_images", controller.ShowImages)
 		v1.GET("/report_script", controller.ReportScript)

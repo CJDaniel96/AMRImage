@@ -1,10 +1,12 @@
 {
     "download": "下载",
+    "download_images": "下载图片",
+    "download_table": "下载表格",
     "upload_csv_for_download": "上传 CSV 下载",
     "show": "显示",
     "show_images": "显示图片",
     "produce_report": "生成报告",
-    "amr_image_data_center": "AMR 图像数据中心",
+    "amr_image_tracing_system": "AOI+AI(AMR)影像及结果反查系统",
     "line": "线别",
     "date": "日期",
     "sn": "SN",
@@ -29,9 +31,13 @@
     "404_title": "404 - 未找到",
     "404_message": "您查找的页面不存在",
     "go_to_home": "转至主页",
+    "comp_name": "元件名称",
     "light_source": "光源",
     "select_light_sources": "选择光源",
     "enlarged_image": "放大图像",
-    "close": "关闭"
+    "close": "关闭",
+    "company_name_placeholder": "USI",
+    "all_rights_reserved": "All Rights Reserved.",
+    "contact_info_placeholder": ""
   }
   

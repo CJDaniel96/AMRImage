@@ -1,10 +1,12 @@
 {
     "download": "Tải về",
+    "download_images": "Tải xuống hình ảnh",
+    "download_table": "Tải xuống Bảng",
     "upload_csv_for_download": "Tải lên CSV để tải về",
     "show": "Hiển thị",
     "show_images": "Hiển thị hình ảnh",
     "produce_report": "Tạo báo cáo",
-    "amr_image_data_center": "Trung tâm Dữ liệu Hình ảnh AMR",
+    "amr_image_tracing_system": "Hệ thống theo dõi hình ảnh và kết quả AOI+AI(AMR)",
     "line": "Dây chuyền",
     "date": "Ngày",
     "sn": "SN",
@@ -32,6 +34,9 @@
     "light_source": "nguồn sáng",
     "select_light_sources": "Chọn nguồn sáng",
     "enlarged_image": "Hình ảnh được phóng to",
-    "close": "Đóng"
+    "close": "Đóng",
+    "company_name_placeholder": "USI",
+    "all_rights_reserved": "All Rights Reserved.",
+    "contact_info_placeholder": ""
   }
   
